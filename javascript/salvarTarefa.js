@@ -1,51 +1,67 @@
-const titulo = document.getElementById('taskTitle')
-const descricao = document.getElementById('taskDescription')
-const lista = document.getElementById('pendentesLista')
 
-let tasks = []
+const titulo = document.getElementById('taskTitle');
+const descricao = document.getElementById('taskDescription');
+const listaPendentes = document.getElementById('pendentesLista');
+const listaConcluidas = document.getElementById('concluidasLista');
 
-class Tarefa {
+let tasks = []; // A ÚNICA "FONTE DA VERDADE"
+
+export class Tarefa {
     constructor(titulo, descricao) {
-        this.id = Date.now()
-        this.titulo = titulo
-        this.descricao = descricao
-        this.status = "pendente"
+        this.id = Date.now();
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.status = "pendente";
     }
 }
 
-function addTask(event) {
+export function addTask(event) {
+    event.preventDefault();
+    const task = new Tarefa(titulo.value.trim(), descricao.value.trim());
 
-    event.preventDefault()
-
-    const task = new Tarefa(titulo.value.trim(), descricao.value.trim())
-
-    if(task.titulo.trim() === '') {
-        alert("Adicione um Título!")
-        return
+    if (task.titulo === '') {
+        alert("Adicione um Título!");
+        return;
     }
-    else {
-        tasks.push(task)
-        salvarTask()
-        renderizarTask()
+    
+    tasks.push(task);
+    salvarTask();
+    renderizarTask();
 
-        titulo.value = ''
-        descricao.value = ''
+    titulo.value = '';
+    descricao.value = '';
+}
+
+export function concluirTask(idDaTarefa) {
+
+    const task = tasks.find(t => t.id === idDaTarefa);
+
+    if (task) {
+        task.status = "concluido";
+        
+        salvarTask();
+        renderizarTask();
     }
-
 }
 
 function renderizarTask() {
-    lista.innerHTML = ''
+    if (listaPendentes) listaPendentes.innerHTML = '';
+    if (listaConcluidas) listaConcluidas.innerHTML = '';
 
     tasks.forEach(tarefa => {
-        criarTask(tarefa)
-    })
+        if (tarefa.status === 'pendente' && listaPendentes) {
+            criarTask(tarefa, listaPendentes);
+} else if (tarefa.status === 'concluido' && listaConcluidas) {
+            criarTask(tarefa, listaConcluidas);
+        }
+    });
 }
 
-function criarTask(task) {
-    const listItem = document.createElement('li')
-    listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
-    listItem.setAttribute('data-task-id', task.id)
+
+function criarTask(task, lista) { 
+    const listItem = document.createElement('li');
+    listItem.className = 'list-group-item d-flex justify-content-between align-items-start';
+    listItem.setAttribute('data-task-id', task.id);
 
     listItem.innerHTML = `
         <div class="ms-2 me-auto">
@@ -53,22 +69,20 @@ function criarTask(task) {
             <p class="mb-1">${task.descricao}</p>
         </div>
         <div class="task-buttons">
-            <button class="btn btn-success btn-sm">Concluir</button>
-            <button class="btn btn-warning btn-sm">Editar</button>
-            <button class="btn btn-danger btn-sm">Remover</button>
+            <button class="btn btn-success btn-sm btn-concluir">Concluir</button>
+            <button class="btn btn-warning btn-sm btn-editar">Editar</button>
+            <button class="btn btn-danger btn-sm btn-remover">Remover</button>
         </div>
-    `
+    `;
 
-    lista.appendChild(listItem)
-
+    lista.appendChild(listItem);
 }
 
 function salvarTask() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-
-function carregarTasks() {
+export function carregarTasks() {
     const tarefasSalvas = JSON.parse(localStorage.getItem('tasks'));
     
     if (tarefasSalvas && tarefasSalvas.length > 0) {
@@ -79,9 +93,5 @@ function carregarTasks() {
             return tarefaCompleta;
         });
     }
-
-    renderizarTask()
-
+    renderizarTask();
 }
-
-export { addTask, carregarTasks as loadTasks }

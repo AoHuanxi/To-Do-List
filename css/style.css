@@ -26,3 +26,18 @@ body{
     margin: 0 auto;
     width:40%;
 }
+
+#concluidasLista {
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    width:40%;
+}
+
+#minhasAbas {
+    display:flex;
+    justify-content: space-around;
+    text-align: center;
+    margin: 0 auto;
+    width:40%;
+}
