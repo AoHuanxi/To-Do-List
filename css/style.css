@@ -1,14 +1,28 @@
-body {
+body{
     font-family: Arial, sans-serif;
 }
 
-.container {
+#header {
+    display: flex;
+    justify-content: space-between;
     text-align: center;
     margin: 0 auto;
-    width: 50%;
+    width:40%;
+
+    padding: 10px; 
+    border-bottom: 1px solid #ccc; 
 }
 
-h1 {
-    color:#333;
+#abas {
+    display: flex;
+    justify-content: space-around;
+    margin: 25px auto;
+    width:40%;
 }
 
+#pendentesLista {
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    width:40%;
+}
