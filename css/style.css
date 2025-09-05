@@ -7,7 +7,7 @@ body{
     justify-content: space-between;
     text-align: center;
     margin: 0 auto;
-    width:40%;
+    width:60%;
 
     padding: 10px; 
     border-bottom: 1px solid #ccc; 
@@ -17,21 +17,21 @@ body{
     display: flex;
     justify-content: space-around;
     margin: 25px auto;
-    width:40%;
+    width:60%;
 }
 
 #pendentesLista {
     display: flex;
     text-align: center;
     margin: 0 auto;
-    width:40%;
+    width:60%;
 }
 
 #concluidasLista {
     display: flex;
     text-align: center;
     margin: 0 auto;
-    width:40%;
+    width:60%;
 }
 
 #minhasAbas {

@@ -4,7 +4,7 @@ const descricao = document.getElementById('taskDescription');
 const listaPendentes = document.getElementById('pendentesLista');
 const listaConcluidas = document.getElementById('concluidasLista');
 
-let tasks = []; // A ÚNICA "FONTE DA VERDADE"
+let tasks = []; 
 
 export class Tarefa {
     constructor(titulo, descricao) {
@@ -41,6 +41,16 @@ export function concluirTask(idDaTarefa) {
         
         salvarTask();
         renderizarTask();
+    }
+}
+
+export function removerTask(idDaTarefa) {
+
+    const task = tasks.find(t=> t.id === idDaTarefa)
+
+    if (task) {
+        tasks = tasks.filter(t => t.id !== idDaTarefa)
+        renderizarTask()
     }
 }
 
