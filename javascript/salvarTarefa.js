@@ -63,17 +63,30 @@ function criarTask(task, lista) {
     listItem.className = 'list-group-item d-flex justify-content-between align-items-start';
     listItem.setAttribute('data-task-id', task.id);
 
-    listItem.innerHTML = `
+    if(task.status == 'pendente') {
+        listItem.innerHTML = `
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">${task.titulo}</div>
+                <p class="mb-1">${task.descricao}</p>
+            </div>
+            <div class="task-buttons">
+                <button class="btn btn-success btn-sm btn-concluir">Concluir</button>
+                <button class="btn btn-warning btn-sm btn-editar">Editar</button>
+                <button class="btn btn-danger btn-sm btn-remover">Remover</button>
+            </div>
+        `
+    }
+    else {
+        listItem.innerHTML = `
         <div class="ms-2 me-auto">
             <div class="fw-bold">${task.titulo}</div>
             <p class="mb-1">${task.descricao}</p>
         </div>
         <div class="task-buttons">
-            <button class="btn btn-success btn-sm btn-concluir">Concluir</button>
-            <button class="btn btn-warning btn-sm btn-editar">Editar</button>
             <button class="btn btn-danger btn-sm btn-remover">Remover</button>
         </div>
-    `;
+    `
+    }
 
     lista.appendChild(listItem);
 }
