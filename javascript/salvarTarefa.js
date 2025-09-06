@@ -1,8 +1,9 @@
 
-const titulo = document.getElementById('taskTitle');
-const descricao = document.getElementById('taskDescription');
-const listaPendentes = document.getElementById('pendentesLista');
-const listaConcluidas = document.getElementById('concluidasLista');
+const titulo = document.getElementById('taskTitle')
+const descricao = document.getElementById('taskDescription')
+const listaPendentes = document.getElementById('pendentesLista')
+const listaConcluidas = document.getElementById('concluidasLista')
+
 
 let tasks = []; 
 
@@ -37,10 +38,10 @@ export function concluirTask(idDaTarefa) {
     const task = tasks.find(t => t.id === idDaTarefa);
 
     if (task) {
-        task.status = "concluido";
+        task.status = "concluido"
         
-        salvarTask();
-        renderizarTask();
+        salvarTask()
+        renderizarTask()
     }
 }
 
@@ -54,24 +55,25 @@ export function removerTask(idDaTarefa) {
     }
 }
 
+
 function renderizarTask() {
-    if (listaPendentes) listaPendentes.innerHTML = '';
-    if (listaConcluidas) listaConcluidas.innerHTML = '';
+    if (listaPendentes) listaPendentes.innerHTML = ''
+    if (listaConcluidas) listaConcluidas.innerHTML = ''
 
     tasks.forEach(tarefa => {
         if (tarefa.status === 'pendente' && listaPendentes) {
-            criarTask(tarefa, listaPendentes);
+            criarTask(tarefa, listaPendentes)
 } else if (tarefa.status === 'concluido' && listaConcluidas) {
-            criarTask(tarefa, listaConcluidas);
+            criarTask(tarefa, listaConcluidas)
         }
     });
 }
 
 
 function criarTask(task, lista) { 
-    const listItem = document.createElement('li');
-    listItem.className = 'list-group-item d-flex justify-content-between align-items-start';
-    listItem.setAttribute('data-task-id', task.id);
+    const listItem = document.createElement('li')
+    listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
+    listItem.setAttribute('data-task-id', task.id)
 
     if(task.status == 'pendente') {
         listItem.innerHTML = `
@@ -110,10 +112,10 @@ export function carregarTasks() {
     
     if (tarefasSalvas && tarefasSalvas.length > 0) {
         tasks = tarefasSalvas.map(tarefaSimples => {
-            const tarefaCompleta = new Tarefa(tarefaSimples.titulo, tarefaSimples.descricao);
-            tarefaCompleta.id = tarefaSimples.id;
-            tarefaCompleta.status = tarefaSimples.status;
-            return tarefaCompleta;
+            const tarefaCompleta = new Tarefa(tarefaSimples.titulo, tarefaSimples.descricao)
+            tarefaCompleta.id = tarefaSimples.id    
+            tarefaCompleta.status = tarefaSimples.status
+            return tarefaCompleta
         });
     }
     renderizarTask();
