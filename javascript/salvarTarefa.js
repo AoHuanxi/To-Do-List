@@ -4,6 +4,10 @@ const descricao = document.getElementById('taskDescription')
 const listaPendentes = document.getElementById('pendentesLista')
 const listaConcluidas = document.getElementById('concluidasLista')
 
+const taskModalEl = document.getElementById('editTaskModal')
+const taskModal = new bootstrap.Modal(taskModalEl)
+const tituloAtualizado = document.getElementById('editTaskTitle')
+const descricaoAtualizada = document.getElementById('editTaskDescription')
 
 let tasks = []; 
 
@@ -45,12 +49,40 @@ export function concluirTask(idDaTarefa) {
     }
 }
 
+export function editarTask(idDaTarefa) {
+    const taskParaEditar = tasks.find(t=> t.id === idDaTarefa)
+    
+    tituloAtualizado.value = taskParaEditar.titulo
+    descricaoAtualizada.value = taskParaEditar.descricao
+
+    taskModal.show()
+}   
+
+
+export function atualizarTask(id, novoTitulo, novaDescricao) {
+
+    if (novoTitulo.trim() === '') {
+        alert("O título não pode ficar em branco!")
+        return false
+    }
+
+    const task = tasks.find(t => t.id === id)
+    if (task) {
+        task.titulo = novoTitulo
+        task.descricao = novaDescricao
+
+        salvarTask()
+        renderizarTask()
+    }
+}
+
 export function removerTask(idDaTarefa) {
 
     const task = tasks.find(t=> t.id === idDaTarefa)
 
     if (task) {
         tasks = tasks.filter(t => t.id !== idDaTarefa)
+        salvarTask()
         renderizarTask()
     }
 }

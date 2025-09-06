@@ -1,37 +1,29 @@
 
-import { addTask, carregarTasks, concluirTask, removerTask } from "./salvarTarefa.js";
+import { addTask, carregarTasks, concluirTask, removerTask, editarTask, atualizarTask } from "./salvarTarefa.js";
 
 const form = document.getElementById('taskForm')
 const listaPendentes = document.getElementById('pendentesLista')
 const listaConcluidas = document.getElementById('concluidasLista')
-/*
-const saveChangesBtn = document.getElementById('saveChangesBtn')
-const editModalEl = document.getElementById('editTaskModal')
 
-saveChangesBtn.addEventListener('click', () => {
-    // 1. Pega o ID que guardamos no modal
-    const idDaTarefa = parseInt(editModalEl.dataset.editingTaskId)
-    const taskParaSalvar = tasks.find(t => t.id === idDaTarefa)
+const taskModalEl = document.getElementById('editTaskModal')
+const btnSalvar = document.getElementById('editarTask')
 
-    if (taskParaSalvar) {
-        // 2. Pega os novos valores dos inputs
-        const novoTitulo = document.getElementById('editTaskTitle').value
-        const novaDescricao = document.getElementById('editTaskDescription').value
+let idEmEdicao = null
 
-        // 3. Atualiza o objeto da tarefa
-        taskParaSalvar.titulo = novoTitulo
-        taskParaSalvar.descricao = novaDescricao
+btnSalvar.addEventListener('click', (event) => {
+    event.preventDefault();
 
-        // 4. Salva no localStorage e renderiza novamente
-        salvarTask();
-        renderizarTask();
+    if (idEmEdicao) {
+        const novoTitulo = document.getElementById('editTaskTitle').value;
+        const novaDescricao = document.getElementById('editTaskDescription').value;
 
-        // 5. Esconde o modal
-        const bootstrapModal = bootstrap.Modal.getInstance(editModalEl)
-        bootstrapModal.hide()
+        atualizarTask(idEmEdicao, novoTitulo, novaDescricao);
+
+        const modalInstance = bootstrap.Modal.getInstance(taskModalEl)
+        modalInstance.hide()
+        idEmEdicao = null
     }
-}); */
-
+})
 
 if (form) {
     form.addEventListener('submit', addTask)
@@ -55,6 +47,8 @@ if (listaPendentes) {
             const liPai = event.target.closest('li')
             const idDaTarefa = parseInt(liPai.dataset.taskId)
 
+            idEmEdicao = idDaTarefa
+
             editarTask(idDaTarefa)
         }
     });
@@ -71,4 +65,4 @@ if (listaConcluidas) {
     });
 }
 
-carregarTasks();
+carregarTasks()
