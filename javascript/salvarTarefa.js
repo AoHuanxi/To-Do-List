@@ -35,6 +35,8 @@ export function addTask(event) {
 
     titulo.value = '';
     descricao.value = '';
+
+    alert("tarefa adicionada!")
 }
 
 export function concluirTask(idDaTarefa) {
@@ -46,6 +48,8 @@ export function concluirTask(idDaTarefa) {
         
         salvarTask()
         renderizarTask()
+
+        alert("tarefa concluída!")
     }
 }
 
@@ -73,6 +77,8 @@ export function atualizarTask(id, novoTitulo, novaDescricao) {
 
         salvarTask()
         renderizarTask()
+
+        alert("tarefa atualizada!")
     }
 }
 
@@ -84,6 +90,7 @@ export function removerTask(idDaTarefa) {
         tasks = tasks.filter(t => t.id !== idDaTarefa)
         salvarTask()
         renderizarTask()
+        alert("tarefa removida!")
     }
 }
 
